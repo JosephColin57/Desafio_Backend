@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-
+const encrypt = require("../lib/encrypt");
 const createError = require("http-errors");
 
 async function createUser(user) {
@@ -8,6 +8,8 @@ async function createUser(user) {
   if (userFound) {
     throw createError(409, "User already exists");
   }
+
+  user.password = await encrypt(user.password);
 
   return await User.create(user);
 }
