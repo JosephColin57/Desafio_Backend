@@ -1,4 +1,4 @@
-const mongoose = require("mongosse")
+const mongoose = require("mongoose")
 
 const modelName = "Post"
 

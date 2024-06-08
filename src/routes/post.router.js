@@ -1,7 +1,6 @@
 const express = require("express");
 const postUseCase = require("../usecases/post.usecase");
 const auth = require("../middlewares/auth.middleware");
-
 const router = express.Router();
 
 // GET /POST
@@ -28,11 +27,12 @@ router.get("/", async (request, response) => {
 
 // POST /POST
 
-router.post("/", auth, async (request, response) => {
+router.post("/",auth, async (request, response) => {
   try {
     const userId = request.user.id;
     const post = request.body;
-    const newPost = await postUseCase.createPost(post, request.user.id);
+    const newPost = await postUseCase.createPost(post, userId);
+
     response.json({
       success: true,
       message: "Post created",

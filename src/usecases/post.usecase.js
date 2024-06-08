@@ -5,7 +5,7 @@ async function createPost(postData, userId) {
   try {
     const post = new Post({ ...postData, user: userId });
 
-    const savePost = await Post.createPost(post);
+    const savePost = await Post.createPost(post).populate("user");
 
     return savePost;
   } catch (error) {
@@ -25,7 +25,9 @@ async function updatePost(postId, postData, userId) {
       throw createError(401, "Unauthorized");
     }
 
-    const updatedPost = await Post.updatePost(postId, postData);
+    const updatedPost = await Post.updatePost(postId, postData).populate(
+      "user"
+    );
 
     return updatedPost;
   } catch (error) {
@@ -35,7 +37,7 @@ async function updatePost(postId, postData, userId) {
 
 async function deletePost(postId, userId) {
   try {
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate("user");
 
     if (!post) {
       throw createError(404, "Post not found");
@@ -55,12 +57,14 @@ async function deletePost(postId, userId) {
 
 async function getAll(search = "") {
   try {
-    let posts = await Post.find();
     if (search) {
       posts = posts.filter(function (post) {
         return post.title.includes(search);
       });
     }
+
+    let posts = await Post.find();
+
     return posts;
   } catch (error) {
     throw createError(400, error.message);
