@@ -9,7 +9,7 @@ async function createUser(user) {
     throw createError(409, "User already exists");
   }
 
-  user.password = await encrypt(user.password);
+  user.password = await encrypt.encrypt(user.password);
 
   return await User.create(user);
 }

@@ -5,7 +5,7 @@ async function createPost(postData, userId) {
   try {
     const post = new Post({ ...postData, user: userId });
 
-    const savePost = await Post.createPost(post).populate("user");
+    const savePost = await post.save();
 
     return savePost;
   } catch (error) {
@@ -55,15 +55,15 @@ async function deletePost(postId, userId) {
   }
 }
 
-async function getAll(search = "") {
+async function getAllPosts(search = "") {
   try {
+    let posts = await Post.find();
+
     if (search) {
       posts = posts.filter(function (post) {
         return post.title.includes(search);
       });
     }
-
-    let posts = await Post.find();
 
     return posts;
   } catch (error) {
@@ -75,5 +75,5 @@ module.exports = {
   createPost,
   updatePost,
   deletePost,
-  getAll,
+  getAllPosts,
 };

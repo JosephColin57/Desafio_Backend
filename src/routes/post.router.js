@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
-    const search = request.query.search || "";
-    const posts = await postUseCase.getAllPosts(search);
+    let search = request.query.search || "";
+    let posts = await postUseCase.getAllPosts(search = "");
     response.json({
       success: true,
       message: "All posts",
