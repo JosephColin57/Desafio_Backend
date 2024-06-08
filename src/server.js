@@ -17,4 +17,6 @@ app.use("/users", userRouter);
 
 app.use("/auth", authRouter);
 
+app.use("/posts", postRouter);
+
 module.exports = app;
