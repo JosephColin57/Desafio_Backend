@@ -53,15 +53,15 @@ async function deletePost(postId, userId) {
 
 async function getAllPosts(search = "") {
   try {
-    let posts = await Post.find();
+    let query = {}
 
     if (search) {
-      posts = posts.filter(function (post) {
-        return post.title.includes(search);
-      });
+      query = { title: { $regex: search, $options: "i" } };
     }
 
+    const posts = await Post.find(query);
     return posts;
+    
   } catch (error) {
     throw createError(400, error.message);
   }

@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", async (request, response) => {
   try {
     let search = request.query.search || "";
-    let posts = await postUseCase.getAllPosts(search = "");
+    let posts = await postUseCase.getAllPosts(search);
     response.json({
       success: true,
       message: "All posts",
@@ -30,6 +30,7 @@ router.get("/", async (request, response) => {
 router.post("/",auth, async (request, response) => {
   try {
     const userId = request.user.id;
+    console.log("🚀 ~ router.post ~ userId:", userId)
     const post = request.body;
     const newPost = await postUseCase.createPost(post, userId);
 
