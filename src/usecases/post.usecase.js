@@ -59,7 +59,7 @@ async function getAllPosts(search = "") {
       query = { title: { $regex: search, $options: "i" } };
     }
 
-    const posts = await Post.find(query);
+    const posts = await Post.find(query).populate("user");
     return posts;
     
   } catch (error) {
